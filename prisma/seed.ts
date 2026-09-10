@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { SAMPLE_POSTS } from "../src/lib/blog";
 
 const prisma = new PrismaClient();
 
@@ -74,12 +75,33 @@ const PRODUCTS = [
 
 async function main() {
   const count = await prisma.product.count();
-  if (count > 0) {
-    console.log(`Skip seed: ${count} products already exist`);
-    return;
+  if (count === 0) {
+    await prisma.product.createMany({ data: PRODUCTS });
+    console.log(`Seeded ${PRODUCTS.length} products`);
+  } else {
+    console.log(`Skip products: ${count} already exist`);
   }
-  await prisma.product.createMany({ data: PRODUCTS });
-  console.log(`Seeded ${PRODUCTS.length} products`);
+
+  const postCount = await prisma.post.count();
+  if (postCount === 0) {
+    await prisma.post.createMany({
+      data: SAMPLE_POSTS.map((p) => ({
+        title: p.title,
+        slug: p.slug,
+        excerpt: p.excerpt,
+        content: p.content,
+        category: p.category,
+        author: p.author,
+        image: p.image,
+        readTime: p.readTime,
+        publishedAt: p.publishedAt,
+        published: true,
+      })),
+    });
+    console.log(`Seeded ${SAMPLE_POSTS.length} posts`);
+  } else {
+    console.log(`Skip posts: ${postCount} already exist`);
+  }
 }
 
 main()

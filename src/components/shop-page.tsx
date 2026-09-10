@@ -31,9 +31,9 @@ export function ShopPage({ products }: { products: CartProduct[] }) {
           borderColor: "#e8d9c0",
         }}
       >
-        <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
           <Logo />
-          <nav className="hidden sm:flex gap-5">
+          <nav className="hidden sm:flex gap-5 items-center">
             {CATEGORIES.map((c) => (
               <button
                 key={c}
@@ -45,28 +45,44 @@ export function ShopPage({ products }: { products: CartProduct[] }) {
                 {c}
               </button>
             ))}
+            <Link
+              href="/blog"
+              className="text-xs font-semibold tracking-wider uppercase transition-colors"
+              style={{ color: "#9a7d5a" }}
+            >
+              Blog
+            </Link>
           </nav>
-          <button
-            type="button"
-            onClick={() => setCartOpen(true)}
-            className="relative transition-opacity hover:opacity-70"
-            style={{ color: "#2c1f0e" }}
-            aria-label="Mở giỏ hàng"
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
-              <line x1="3" y1="6" x2="21" y2="6" />
-              <path d="M16 10a4 4 0 01-8 0" />
-            </svg>
-            {totalItems > 0 ? (
-              <span
-                className="absolute -top-2 -right-2 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold"
-                style={{ background: "#c47c1a", color: "#fff" }}
-              >
-                {totalItems}
-              </span>
-            ) : null}
-          </button>
+          <div className="flex items-center gap-3">
+            <Link
+              href="/blog"
+              className="sm:hidden text-xs font-semibold tracking-wider uppercase"
+              style={{ color: "#9a7d5a" }}
+            >
+              Blog
+            </Link>
+            <button
+              type="button"
+              onClick={() => setCartOpen(true)}
+              className="relative transition-opacity hover:opacity-70"
+              style={{ color: "#2c1f0e" }}
+              aria-label="Mở giỏ hàng"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <path d="M16 10a4 4 0 01-8 0" />
+              </svg>
+              {totalItems > 0 ? (
+                <span
+                  className="absolute -top-2 -right-2 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold"
+                  style={{ background: "#c47c1a", color: "#fff" }}
+                >
+                  {totalItems}
+                </span>
+              ) : null}
+            </button>
+          </div>
         </div>
       </header>
 
@@ -267,6 +283,10 @@ export function ShopPage({ products }: { products: CartProduct[] }) {
           Hotline: 0901 234 567 · matongphanthiet@gmail.com
         </p>
         <div className="flex items-center justify-center gap-4 mt-4">
+          <Link href="/blog" className="text-xs font-semibold transition-opacity hover:opacity-70" style={{ color: "#9a7d5a" }}>
+            Blog
+          </Link>
+          <span style={{ color: "#e8d9c0" }}>·</span>
           <Link href="/admin" className="text-xs transition-opacity hover:opacity-60" style={{ color: "#c8b89a" }}>
             Quản trị
           </Link>

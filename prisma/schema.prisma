@@ -49,3 +49,19 @@ model OrderItem {
   qty         Int
   order       Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
 }
+
+model Post {
+  id        String   @id @default(cuid())
+  title     String
+  slug      String   @unique
+  excerpt   String
+  content   String
+  category  String
+  author    String
+  image     String
+  readTime  Int      @default(3)
+  published Boolean  @default(true)
+  publishedAt DateTime @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
