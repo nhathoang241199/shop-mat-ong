@@ -7,7 +7,7 @@ import { ProductCard } from "@/components/product-card";
 import { CartDrawer } from "@/components/cart-drawer";
 import { ContactFloatButtons } from "@/components/contact-float-buttons";
 import { useCart, type CartProduct } from "@/components/cart-context";
-import { CATEGORIES } from "@/lib/constants";
+import { CATEGORIES, CONTACT } from "@/lib/constants";
 
 export function ShopPage({ products }: { products: CartProduct[] }) {
   const { cart, addToCart, totalItems, setCartOpen } = useCart();
@@ -258,8 +258,8 @@ export function ShopPage({ products }: { products: CartProduct[] }) {
           <div className="mt-4 grid sm:grid-cols-3 gap-4">
             {[
               { label: "Giờ mở cửa", value: "Thứ 2 – Thứ 7: 7:00 – 19:00\nChủ nhật: 8:00 – 17:00" },
-              { label: "Hotline", value: "0901 234 567" },
-              { label: "Email", value: "matongphanthiet@gmail.com" },
+              { label: "Hotline", value: CONTACT.hotlineDisplay },
+              { label: "Email", value: CONTACT.email },
             ].map(({ label, value }) => (
               <div key={label} className="px-4 py-3 rounded-xl" style={{ background: "#fff", border: "1px solid #e8d9c0" }}>
                 <p className="text-xs font-semibold tracking-wider uppercase mb-1" style={{ color: "#c47c1a" }}>
@@ -280,7 +280,7 @@ export function ShopPage({ products }: { products: CartProduct[] }) {
           Mật ong & Nông sản sạch từ Phan Thiết, Bình Thuận · © 2026
         </p>
         <p className="mt-1 text-xs" style={{ color: "#c8b89a" }}>
-          Hotline: 0901 234 567 · matongphanthiet@gmail.com
+          Hotline: {CONTACT.hotlineDisplay} · {CONTACT.email}
         </p>
         <div className="flex items-center justify-center gap-4 mt-4">
           <Link href="/blog" className="text-xs font-semibold transition-opacity hover:opacity-70" style={{ color: "#9a7d5a" }}>

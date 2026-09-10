@@ -138,7 +138,7 @@ export function CheckoutPage() {
                 <input
                   required
                   type="tel"
-                  placeholder="0901 234 567"
+                  placeholder="0327 739 763"
                   value={form.phone}
                   onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
                   className="w-full px-4 py-3 text-sm outline-none"

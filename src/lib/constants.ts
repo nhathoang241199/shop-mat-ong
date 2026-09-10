@@ -5,12 +5,12 @@ export const SHIPPING_FEE = 35_000;
 
 /** Contact links — ưu tiên env, fallback giá trị mẫu. */
 export const CONTACT = {
-  hotlineDisplay: "0901 234 567",
-  hotlineDigits: "0901234567",
-  email: "matongphanthiet@gmail.com",
+  hotlineDisplay: "0327 739 763",
+  hotlineDigits: "0327739763",
+  email: "Phuonganh763pt@gmail.com",
   /** Facebook Page username/ID — dùng khi chưa set NEXT_PUBLIC_MESSENGER_URL */
   messenger: "matongphanthiet",
-  zalo: "0901234567",
+  zalo: "0327739763",
 } as const;
 
 /** Link m.me hoặc Facebook Messages — giống pattern thuê máy ảnh Long Khánh. */
