@@ -1,26 +1,39 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:wght@300;400;500;600;700&display=swap");
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: #fdf8f0;
+  --color-foreground: #2c1f0e;
+  --color-card: #ffffff;
+  --color-card-foreground: #2c1f0e;
+  --color-primary: #c47c1a;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #f5ede0;
+  --color-secondary-foreground: #7a5c38;
+  --color-muted: #f0e8d8;
+  --color-muted-foreground: #9a7d5a;
+  --color-accent: #e8940f;
+  --color-accent-foreground: #ffffff;
+  --color-border: #e8d9c0;
+  --color-ring: #c47c1a;
+  --radius: 4px;
+  --font-sans: "Nunito", sans-serif;
+  --font-display: "Fraunces", serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  min-height: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #fdf8f0;
+  color: #2c1f0e;
+  font-family: "Nunito", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #e8d9c0 transparent;
 }
