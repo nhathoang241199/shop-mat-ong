@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
 import {
-  adminCookieOptions,
+  adminCookieAttrs,
   checkAdminPassword,
-  clearAdminCookieOptions,
+  clearAdminCookieAttrs,
   createAdminToken,
+  getAdminCookieName,
   isAdminAuthenticated,
 } from "@/lib/admin-auth";
 
@@ -14,17 +14,19 @@ export async function GET() {
 
 export async function POST(req: Request) {
   const body = (await req.json()) as { password?: string; action?: string };
+
   if (body.action === "logout") {
-    const jar = await cookies();
-    jar.set(clearAdminCookieOptions());
-    return NextResponse.json({ ok: true });
+    const res = NextResponse.json({ ok: true });
+    res.cookies.set(getAdminCookieName(), "", clearAdminCookieAttrs());
+    return res;
   }
 
   if (!checkAdminPassword(String(body.password ?? ""))) {
     return NextResponse.json({ error: "Sai mật khẩu" }, { status: 401 });
   }
 
-  const jar = await cookies();
-  jar.set(adminCookieOptions(createAdminToken()));
-  return NextResponse.json({ ok: true });
+  const token = createAdminToken();
+  const res = NextResponse.json({ ok: true });
+  res.cookies.set(getAdminCookieName(), token, adminCookieAttrs());
+  return res;
 }

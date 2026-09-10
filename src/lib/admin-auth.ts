@@ -1,15 +1,27 @@
 import { createHmac, timingSafeEqual } from "crypto";
 import { cookies } from "next/headers";
+import type { ResponseCookie } from "next/dist/compiled/@edge-runtime/cookies";
 
 const COOKIE = "smo_admin";
 const MAX_AGE = 60 * 60 * 24 * 7;
 
 function secret() {
-  return process.env.ADMIN_PASSWORD?.trim() || "admin123";
+  return (
+    process.env.ADMIN_SESSION_SECRET?.trim() ||
+    process.env.ADMIN_PASSWORD?.trim() ||
+    "admin123"
+  );
 }
 
 function sign(value: string) {
   return createHmac("sha256", secret()).update(value).digest("hex");
+}
+
+/** HTTP LAN (vd. 192.168.x.x) không dùng Secure cookie — chỉ bật khi HTTPS. */
+function cookieSecure() {
+  if (process.env.COOKIE_SECURE === "true") return true;
+  if (process.env.COOKIE_SECURE === "false") return false;
+  return false;
 }
 
 export function createAdminToken() {
@@ -19,11 +31,17 @@ export function createAdminToken() {
 
 export function verifyAdminToken(token: string | undefined | null) {
   if (!token) return false;
-  const [payload, sig] = token.split(".");
-  if (!payload || !sig) return false;
+  const dot = token.lastIndexOf(".");
+  if (dot <= 0) return false;
+  const payload = token.slice(0, dot);
+  const sig = token.slice(dot + 1);
+  if (!payload.startsWith("admin:") || !sig) return false;
   const expected = sign(payload);
   try {
-    return timingSafeEqual(Buffer.from(sig), Buffer.from(expected));
+    const a = Buffer.from(sig);
+    const b = Buffer.from(expected);
+    if (a.length !== b.length) return false;
+    return timingSafeEqual(a, b);
   } catch {
     return false;
   }
@@ -34,25 +52,25 @@ export async function isAdminAuthenticated() {
   return verifyAdminToken(jar.get(COOKIE)?.value);
 }
 
-export function adminCookieOptions(token: string) {
+export function getAdminCookieName() {
+  return COOKIE;
+}
+
+export function adminCookieAttrs(): Partial<ResponseCookie> {
   return {
-    name: COOKIE,
-    value: token,
     httpOnly: true,
-    sameSite: "lax" as const,
-    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    secure: cookieSecure(),
     path: "/",
     maxAge: MAX_AGE,
   };
 }
 
-export function clearAdminCookieOptions() {
+export function clearAdminCookieAttrs(): Partial<ResponseCookie> {
   return {
-    name: COOKIE,
-    value: "",
     httpOnly: true,
-    sameSite: "lax" as const,
-    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    secure: cookieSecure(),
     path: "/",
     maxAge: 0,
   };
