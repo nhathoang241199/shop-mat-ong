@@ -3,6 +3,24 @@ export const CATEGORIES = ["Tất cả", "Mật ong", "Sản phẩm ong", "Nông
 export const FREE_SHIPPING_THRESHOLD = 500_000;
 export const SHIPPING_FEE = 35_000;
 
+/** Contact links — cập nhật ID/SĐT thật khi có. */
+export const CONTACT = {
+  hotlineDisplay: "0901 234 567",
+  hotlineDigits: "0901234567",
+  email: "matongphanthiet@gmail.com",
+  /** Facebook Page username hoặc ID cho m.me */
+  messenger: "matongphanthiet",
+  zalo: "0901234567",
+} as const;
+
+export function messengerUrl() {
+  return `https://m.me/${CONTACT.messenger}`;
+}
+
+export function zaloUrl() {
+  return `https://zalo.me/${CONTACT.zalo}`;
+}
+
 export function formatVnd(n: number) {
   return new Intl.NumberFormat("vi-VN").format(n) + "₫";
 }

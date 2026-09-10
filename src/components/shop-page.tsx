@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Logo } from "@/components/logo";
 import { ProductCard } from "@/components/product-card";
 import { CartDrawer } from "@/components/cart-drawer";
+import { ContactFloatButtons } from "@/components/contact-float-buttons";
 import { useCart, type CartProduct } from "@/components/cart-context";
 import { CATEGORIES } from "@/lib/constants";
 
@@ -273,6 +274,7 @@ export function ShopPage({ products }: { products: CartProduct[] }) {
       </footer>
 
       <CartDrawer />
+      <ContactFloatButtons />
     </div>
   );
 }
