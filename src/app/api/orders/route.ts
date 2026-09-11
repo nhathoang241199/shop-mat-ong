@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { calcShipping, generateOrderCode, generatePaymentRef } from "@/lib/constants";
+import { effectivePrice } from "@/lib/promotion";
 
 export async function POST(req: Request) {
   try {
@@ -40,7 +41,7 @@ export async function POST(req: Request) {
       return {
         productId: product.id,
         name: product.name,
-        price: product.price,
+        price: effectivePrice(product.price),
         qty,
       };
     });
